@@ -1,0 +1,38 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- Base application theme. -->
+  <style name="Theme.Photo" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+    <!-- Primary brand color. -->
+    <item name="colorPrimary">@color/blue_light</item>
+    <item name="colorPrimaryVariant">@color/blue_dark</item>
+    <item name="colorOnPrimary">@color/white</item>
+    <!-- Secondary brand color. -->
+    <item name="colorSecondary">@color/teal_200</item>
+    <item name="colorSecondaryVariant">@color/teal_700</item>
+    <item name="colorOnSecondary">@color/black</item>
+    <!-- Status bar color. -->
+    <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+    <!-- Customize your theme here. -->
+  </style>
+
+
+  <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <item name="android:textSize">20sp</item>
+    <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="menuText" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+    <item name="colorOnPrimary">#ffffff</item>
+  </style>
+
+
+  <style name="MyCheckBox" parent="@style/Widget.MaterialComponents.CompoundButton.CheckBox">
+    <item name="materialThemeOverlay">@style/ThemeOverlay.CheckBox</item>
+  </style>
+
+  <style name="ThemeOverlay.CheckBox" parent="">
+    <item name="colorSecondary">@color/blue_light</item>   <!-- checked -->
+    <item name="colorOnSurface">@color/blue_light</item>  <!-- unchecked -->
+    <item name="colorControlActivated">@color/blue_light</item>
+    <item name="colorControlNormal">@color/blue_light</item>
+  </style>
+</resources>
