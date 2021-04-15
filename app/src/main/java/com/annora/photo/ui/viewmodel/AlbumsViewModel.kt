@@ -55,7 +55,6 @@ class AlbumsViewModel : ViewModel() {
             val res =
                 VirtualAlbumDataBase.getInstance().virtualAlbumDao().getAllVirtualLocalAlbums()
             val virtual = ArrayList(res)
-            Log.d(APP_TAG, "virtual get : $virtual")
             virtualAlbumsLiveData.postValue(virtual)
         }
     }
@@ -75,8 +74,13 @@ class AlbumsViewModel : ViewModel() {
             return
         }
         val preNum = BaseApp.context.defaultSharedPreferences.getInt(SAVE_LOCAL_NUM, 0)
-        if (preNum != ImageLoader.getInstance().allLocalAlbum[0].images.size) {
+        val curNum = ImageLoader.getInstance().allLocalAlbum[0].images.size
+        Log.d(TEST_TAG, "pre num : $preNum ｜ cur num : $curNum")
+        if (preNum != curNum) {
             shouldLoadAutoLiveData.postValue(true)
+            BaseApp.context.defaultSharedPreferences.editor {
+                putInt(SAVE_LOCAL_NUM, curNum)
+            }
             return
         }
         viewModelScope.launch(Dispatchers.IO) {

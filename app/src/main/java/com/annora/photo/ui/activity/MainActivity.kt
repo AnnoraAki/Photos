@@ -22,6 +22,7 @@ import com.annora.photo.utils.defaultSharedPreferences
 import com.annora.photo.utils.editor
 import com.annora.photo.utils.toast
 import kotlinx.android.synthetic.main.activity_main.*
+import java.security.Permission
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,15 +60,14 @@ class MainActivity : AppCompatActivity() {
             )
         } else {
             Log.d(APP_TAG, "permission is ok")
+            albumsViewModel.initLocal(this)
         }
     }
 
     private fun init() {
-        albumsViewModel.initLocal(this)
         albumsViewModel.localAlbumsLiveData.observe(this@MainActivity, Observer {
             if (it.size <= 0) return@Observer
             ImageLoader.getInstance().allLocalAlbum = it
-            defaultSharedPreferences.editor { putInt(SAVE_LOCAL_NUM, it[0].images.size) }
             updateLocalData()
         })
         albumsViewModel.virtualAlbumsLiveData.observe(this@MainActivity, Observer {
@@ -140,6 +140,8 @@ class MainActivity : AppCompatActivity() {
             PermissionHelper.PERMISSION_WRITE_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     toast("你拒绝了权限申请，可能导致无法修改图片或图片分类")
+                } else {
+                    albumsViewModel.initLocal(this)
                 }
             }
         }

@@ -7,6 +7,7 @@ import android.util.Log
 import com.annora.photo.common.BaseApp
 import com.annora.photo.common.IMG_SIZE
 import com.annora.photo.common.TEST_TAG
+import com.annora.photo.common.classifiy
 import com.annora.photo.tensorflow.Classifier
 import com.annora.photo.tensorflow.ClassifierFloatMobileNet
 import com.annora.photo.utils.encodeForPath
@@ -52,11 +53,10 @@ object LoadAutoAlbumDataSource {
 
     private fun classifyIntoAlbum(item: PictureItem, labels: Array<String>) {
         Log.d(TEST_TAG, "${item.path} : ${labels.contentToString()}")
-        val tag = labels[0]
+        val tag = classifiy[labels[0]] ?: return
         val chance = labels[1]
-//        if (chance.toFloat() < 0.8f) return
+        if (chance.toFloat() < 0.5f) return
         val index = findAlbum(tag)
-        Log.d(TEST_TAG, "$tag -- $index")
         if (index == -1) {
             val images = arrayListOf<PictureItem>()
             images.add(item)
