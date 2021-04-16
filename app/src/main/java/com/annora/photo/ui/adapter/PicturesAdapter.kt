@@ -53,7 +53,11 @@ class PicturesAdapter(private val onClicked: (pos: Int) -> Unit) :
     }
 
     fun getSelectedPhotos(): List<PictureItem> {
-        return pictures.filter { it.selected }
+        val res = pictures.filter { it.selected }
+        pictures.forEach {
+            it.selected = false
+        }
+        return res
     }
 
     inner class PicturesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

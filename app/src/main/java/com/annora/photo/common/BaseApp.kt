@@ -11,6 +11,7 @@ class BaseApp : Application() {
     companion object {
         lateinit var context: Context
             private set
+        var IS_TF_DEBUG = false
     }
 
     override fun attachBaseContext(base: Context) {

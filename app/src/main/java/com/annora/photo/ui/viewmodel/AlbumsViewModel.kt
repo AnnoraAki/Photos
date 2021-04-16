@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.annora.photo.common.APP_TAG
 import com.annora.photo.common.BaseApp
 import com.annora.photo.common.SAVE_LOCAL_NUM
 import com.annora.photo.common.TEST_TAG
@@ -44,10 +43,13 @@ class AlbumsViewModel : ViewModel() {
 
     fun checkData() {
         if (ImageLoader.getInstance().isUpdate) {
-            localAlbumsLiveData.value = ImageLoader.getInstance().allLocalAlbum
-            initAuto()
+            virtualAlbumsLiveData.value = ImageLoader.getInstance().virtualAlbum
             ImageLoader.getInstance().isUpdate = false
         }
+    }
+
+    fun close() {
+        LoadAutoAlbumDataSource.close()
     }
 
     private fun initLocalVirtualAlbums() {
@@ -60,6 +62,7 @@ class AlbumsViewModel : ViewModel() {
     }
 
     private fun saveAutoAlbums() {
+        if (BaseApp.IS_TF_DEBUG) return
         viewModelScope.launch(Dispatchers.IO) {
             VirtualAlbumDataBase.getInstance().virtualAlbumDao().deleteAllAutoAlbum()
             ImageLoader.getInstance().allAutoAlbum.forEach {
@@ -69,8 +72,10 @@ class AlbumsViewModel : ViewModel() {
     }
 
     private fun loadAutoAlbums() {
-        if (ImageLoader.getInstance().allLocalAlbum.isEmpty()) {
+        if (BaseApp.IS_TF_DEBUG) {
             shouldLoadAutoLiveData.postValue(true)
+            // 防止重复触发
+            BaseApp.IS_TF_DEBUG = false
             return
         }
         val preNum = BaseApp.context.defaultSharedPreferences.getInt(SAVE_LOCAL_NUM, 0)

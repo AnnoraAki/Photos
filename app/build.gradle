@@ -34,10 +34,14 @@ android {
     aaptOptions {
         noCompress "tflite"
     }
+    buildFeatures {
+        mlModelBinding true
+    }
 }
 
 dependencies {
     implementation "com.github.yalantis:ucrop:$room_version"
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
     apply plugin: 'kotlin-kapt'
     apply plugin: "kotlin-android"
     apply plugin: "kotlin-android-extensions"

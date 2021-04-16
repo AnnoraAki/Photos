@@ -4,17 +4,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.util.Log
-import com.annora.photo.common.BaseApp
-import com.annora.photo.common.IMG_SIZE
 import com.annora.photo.common.TEST_TAG
 import com.annora.photo.common.classifiy
-import com.annora.photo.tensorflow.Classifier
-import com.annora.photo.tensorflow.ClassifierFloatMobileNet
+import com.annora.photo.tensorflow.ClassifierMobileNet
 import com.annora.photo.utils.encodeForPath
 import java.util.*
 
 object LoadAutoAlbumDataSource {
-    private var classifier: Classifier? = null
+    private var classifier: ClassifierMobileNet? = null
     private var autoAlbums = ImageLoader.getInstance().allAutoAlbum
 
     /**
@@ -27,19 +24,15 @@ object LoadAutoAlbumDataSource {
             if (checkLocalAlbumIsLoaded()) {
                 ImageLoader.getInstance().allLocalAlbum[0].images.forEach {
                     val loadBitmap = BitmapFactory.decodeFile(it.path)
-                    if (loadBitmap.width < classifier?.imageSizeX ?: IMG_SIZE || loadBitmap.height < classifier?.imageSizeX ?: IMG_SIZE) {
-                        loadBitmap.recycle()
-                    } else {
-                        val changeBitmap = changeBitmapSize(
-                            loadBitmap,
-                            classifier?.imageSizeX ?: IMG_SIZE,
-                            classifier?.imageSizeY ?: IMG_SIZE
-                        )
-                        val label = classifier?.classifyFrame(changeBitmap)
-                        loadBitmap.recycle()
-                        changeBitmap.recycle()
-                        if (label != null) classifyIntoAlbum(it, label)
-                    }
+                    val changeBitmap = changeBitmapSize(
+                        loadBitmap,
+                        ClassifierMobileNet.IMG_SIZE,
+                        ClassifierMobileNet.IMG_SIZE
+                    )
+                    val label = classifier?.classifyFrame(changeBitmap)
+                    loadBitmap.recycle()
+                    changeBitmap.recycle()
+                    if (label != null) classifyIntoAlbum(it, label)
                 }
                 Log.d(TEST_TAG, "classify is done :>")
                 finished.invoke(autoAlbums)
@@ -69,10 +62,6 @@ object LoadAutoAlbumDataSource {
             )
             autoAlbums.add(album)
         } else {
-            Log.d(
-                TEST_TAG,
-                "${autoAlbums[index].name} images : ${autoAlbums[index].images}"
-            )
             autoAlbums[index].images.add(item)
         }
     }
@@ -108,6 +97,10 @@ object LoadAutoAlbumDataSource {
             classifier?.close()
             classifier = null
         }
-        classifier = ClassifierFloatMobileNet(BaseApp.context).apply { useCPU() }
+        classifier = ClassifierMobileNet()
+    }
+
+    fun close() {
+        if (classifier != null) classifier?.close()
     }
 }
