@@ -1,6 +1,5 @@
-package com.annora.photo.ui.viewmodel
+package com.annora.photo.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.annora.photo.data.PictureItem

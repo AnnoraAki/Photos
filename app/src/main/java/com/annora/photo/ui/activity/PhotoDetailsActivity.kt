@@ -20,7 +20,7 @@ import com.annora.photo.common.APP_TAG
 import com.annora.photo.data.ImageLoader
 import com.annora.photo.data.PictureItem
 import com.annora.photo.ui.adapter.DetailsAdapter
-import com.annora.photo.ui.viewmodel.PhotoDetailsViewModel
+import com.annora.photo.viewmodel.PhotoDetailsViewModel
 import com.annora.photo.utils.*
 import com.yalantis.ucrop.UCrop
 import kotlinx.android.synthetic.main.activity_photo_details.*

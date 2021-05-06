@@ -33,7 +33,7 @@
 
 
         <provider
-            android:name=".provider.PictureProvider"
+            android:name=".common.PictureProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">

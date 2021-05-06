@@ -1,4 +1,4 @@
-package com.annora.photo.ui.viewmodel
+package com.annora.photo.viewmodel
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity

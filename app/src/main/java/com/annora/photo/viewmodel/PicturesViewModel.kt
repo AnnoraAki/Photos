@@ -1,4 +1,4 @@
-package com.annora.photo.ui.viewmodel
+package com.annora.photo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

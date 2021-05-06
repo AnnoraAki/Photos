@@ -1,4 +1,4 @@
-package com.annora.photo.provider
+package com.annora.photo.common
 
 import androidx.core.content.FileProvider
 

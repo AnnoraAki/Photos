@@ -10,7 +10,7 @@ import com.annora.photo.R
 import com.annora.photo.data.Album
 import com.annora.photo.data.ImageLoader
 import com.annora.photo.ui.adapter.PicturesAdapter
-import com.annora.photo.ui.viewmodel.PicturesViewModel
+import com.annora.photo.viewmodel.PicturesViewModel
 import kotlinx.android.synthetic.main.activity_pictures.*
 
 class PicturesActivity : AppCompatActivity() {

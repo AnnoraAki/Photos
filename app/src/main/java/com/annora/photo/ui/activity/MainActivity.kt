@@ -15,7 +15,7 @@ import com.annora.photo.data.Album
 import com.annora.photo.data.ImageLoader
 import com.annora.photo.ui.NewFolderDialog
 import com.annora.photo.ui.adapter.AlbumsAdapter
-import com.annora.photo.ui.viewmodel.AlbumsViewModel
+import com.annora.photo.viewmodel.AlbumsViewModel
 import com.annora.photo.utils.PermissionHelper
 import com.annora.photo.utils.toast
 import kotlinx.android.synthetic.main.activity_main.*
